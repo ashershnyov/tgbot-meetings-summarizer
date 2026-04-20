@@ -90,7 +90,11 @@ func (h *Handler) handleGet(c tele.Context) error {
 	if err != nil {
 		return c.Send("Встреча не найдена или у вас нет доступа ко встрече с таким ID.")
 	}
-	msg := fmt.Sprintf("Транскрипция встречи `%s`:\n%s\n\nКратко: %s", m.ID, m.Transcript, m.Summary)
+	summary := "В обработке..."
+	if m.Summary != nil {
+		summary = *m.Summary
+	}
+	msg := fmt.Sprintf("Транскрипция встречи `%s`:\n%s\n\nКратко: %s", m.ID, m.Transcript, summary)
 	return c.Send(msg)
 }
 
